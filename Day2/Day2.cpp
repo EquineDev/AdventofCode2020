@@ -5,7 +5,6 @@
 #include <iostream>
 #include <vector>
 #include <tuple>
-#include <cassert>
 
 std::vector<std::tuple<int, int, char, std::string>> data;
 
