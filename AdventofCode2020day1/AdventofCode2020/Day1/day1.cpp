@@ -11,7 +11,7 @@ std::unordered_map<int, int> umapData;
 
 void ReadFile()
 {
-	std::ifstream file("data.txt");
+	std::ifstream file("dataDay1.txt");
 	int num;
 	while (file.eof() == false)
 	{
