@@ -5,10 +5,8 @@
 #include <string>
 #include <iostream>
 #include <vector>
-#include <tuple>
 
 std::vector<std::string> data;
-int lenghtOfSlope = 0;
 void GetInput(std::string FileData)
 {
 	std::ifstream file(FileData);
@@ -17,7 +15,6 @@ void GetInput(std::string FileData)
 	{
 		data.push_back(slopes);
 	}
-	lenghtOfSlope = data[0].length() +1;
 	file.close();
 
 	
