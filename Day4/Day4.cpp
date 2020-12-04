@@ -60,8 +60,22 @@ int countValidPassports() {
 	return validCount;
 }
 
+int countValidStrictPassports() {
+
+	int validCount = 0;
+
+	for (auto passport : Data)
+	{
+		if (passport.isValidStrict())
+			validCount++;
+	}
+
+	return validCount;
+}
 int main()
 {
 	GetInput("Day4Data.txt");
 	std::cout << "Here are the number of valid passports " << countValidPassports() << std::endl;
+	std::cout << "Here are the number of valid passports " << countValidStrictPassports() << std::endl;
+	system("Pause");
 }
