@@ -21,22 +21,22 @@ void GetInput(std::string FileData)
     file.close();
 }
 
-int IdSeat(std::string& seat) 
+int IdSeat(std::string seat) 
 {
     int xMin = 0, xMax = 7, yMin = 0, yMax = 127;
     for (int i = 0; i <= 6; i++) 
     {
-        if (*seat[i] == 'F')
+        if ( seat[i] == 'F')
             yMax -= (yMax - yMin + 1) / 2;
-        else if (*seat[i] == 'B')
+        else if (seat[i] == 'B')
             yMin += (yMax - yMin + 1) / 2;
     }
 
     for (int i = 7; i <= 9; i++) 
     {
-        if (*seat[i] == 'L')
+        if (seat[i] == 'L')
             xMax -= (xMax - xMin + 1) / 2;
-        else if (*seat[i] == 'R')
+        else if (seat[i] == 'R')
             xMin += (xMax - xMin + 1) / 2;
     }
 
@@ -56,12 +56,33 @@ int HighSeatId()
     return id;
 }
 
+int MissingSeatID()
+{
+    bool ids[1024] = {}; // there are 128*8=1024 possible seats
+
+    for (std::string seat : seats)
+    {
+        int id = IdSeat(seat);
+        ids[id] = true;
+    }
+
+    for (int i = 1; i < 1023; i++)
+    {
+        if (ids[i - 1] && !ids[i] && ids[i + 1])
+        {
+            return i;
+        }
+    }
+
+    return -1;
+}
 
 
 int main()
 {
     GetInput("Day5Data.txt");
-    std::cout << "Hello World!\n";
+    std::cout << "Here is the highest seat ID: " << HighSeatId() << std::endl;
+    std::cout << "Here is the Missing seat ID: " << MissingSeatID() << std::endl;
     system("Pause");
 }
 
