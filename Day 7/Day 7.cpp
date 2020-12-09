@@ -88,6 +88,7 @@ void GetInput(std::string FileData)
 		std::map<std::string, int> rule = CreateRule(words);
 		Data[color] = std::move(rule);
 	}
+	file.close();
 }
 
 
