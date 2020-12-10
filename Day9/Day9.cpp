@@ -5,6 +5,7 @@
 #include <cassert>
 #include <vector>
 #include <unordered_set>
+#include <algorithm>
 
 std::vector<int64_t> Data;
 
@@ -54,14 +55,61 @@ int FirstNumberNotASum(int64_t size)
 	return -1;
 
 }
+
+int FindEncryptionWeakness(int numberToFind) 
+{
+	int nCount = Data.size();
+	std::vector<int64_t> presum(nCount, 0);
+	std::vector<int> location;
+	int64_t maxNum = INT_MIN, minNum = INT_MAX;
+	int  start = 0, end =0;
+	presum[0] = Data[0];
+
+	//setup pre sum of numbers to be check againsted our number to find found
+	for (int i = 1; i < nCount; i++)
+		presum[i] = presum[i - 1] + Data[i];
+
+	
+
+	//find the sum of two number locations and store it so we can find the min and max numbers
+	for (int i = 1; i < nCount; i++) 
+	{
+		for(int j =0; j < i; j++ )
+		{
+			if ((presum[i] - presum[j]) == numberToFind) 
+			{
+				location.push_back(j);
+				location.push_back(i);
+				break;
+			}
+		}
+	}
+
+
+	//find the max and min numbers in our pairs 
+	for(int i = location[0];  i <= location[1]; i++)
+	{
+		minNum = std::min(minNum, Data[i]);
+		maxNum = std::max(maxNum, Data[i]);
+	}
+
+	return minNum + maxNum;
+}
 int main()
 {
+	int numberToFind = 0;
 	GetInput("Test.txt");
 	std::cout << "Test Data" << std::endl;
-	std::cout << "First Number that is not a : " << FirstNumberNotASum(5) << std::endl;
+	numberToFind = FirstNumberNotASum(5);
+	std::cout << "First Number that is not a sum : " << numberToFind << std::endl;
+	std::cout << "Sum of Weakness Numbers is : " << FindEncryptionWeakness(numberToFind) << std::endl;
 	Data.clear();
+
 	GetInput("Day9Data.txt");
-	std::cout << "First Number that is not a : " << FirstNumberNotASum(25) << std::endl;
+	std::cout << "Real Data" << std::endl;
+	numberToFind = FirstNumberNotASum(25);
+	std::cout << "First Number that is not a : " << numberToFind << std::endl;
+	std::cout << "Sum of Weakness Numbers is : " << FindEncryptionWeakness(numberToFind) << std::endl;
 }
 
 // Run program: Ctrl + F5 or Debug > Start Without Debugging menu
