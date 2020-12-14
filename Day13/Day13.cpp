@@ -108,7 +108,7 @@ int GetInputTimeAndBusses(std::string  filename)
 	 return x1;
  }
 
-
+ //NOTE DIDNT FINISH THes whole theorem math problem did it with libary in C# instead not included in solution this far as i got
 void  RemainderTheoremChinese()
  {
 	 long long M = 1;
