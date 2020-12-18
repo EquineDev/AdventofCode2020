@@ -5,7 +5,6 @@
 #include <fstream>
 #include <sstream>
 #include <vector>
-#include <unordered_map>
 #include <algorithm>
 #include <numeric>
 
@@ -15,7 +14,7 @@ enum class State : char
 	occupied = '#',
 	unavailable = '.'
 };
-std::unordered_map<char, State>  TokenTable = { {'L',State::empty}, {'#',State::occupied}, {'.',State::unavailable} };
+
 std::vector<std::string> Data;
 
 void GetInput(std::string FileData)
@@ -62,7 +61,79 @@ int CheckoccupiedOne(std::vector<std::string>& floor, int x, int y)
 
 	return count;
 }
+int CheckoccupiedTwo(std::vector<std::string>& floor, int x, int y)
+{
+	size_t count = 0;
+	long int i = y, j = x;
+	// vertical directions first
+	while (i > 0 && floor[--i][x] == '.');
 
+	if (y > 0)
+		count += (floor[i][x] == '#');
+	i = y;
+
+
+
+	while (i < floor.size() - 1 && floor[++i][x] == '.');
+
+	if (y < floor.size() - 1)
+		count += (floor[i][x] == '#');
+	i = y;
+
+
+
+	// horizontal directions
+	while (j > 0 && floor[y][--j] == '.');
+
+	if (x > 0)
+		count += (floor[y][j] == '#');
+	j = x;
+
+
+
+	while (j < floor[y].size() - 1 && floor[y][++j] == '.');
+
+	if (x < floor[y].size() - 1)
+		count += (floor[y][j] == '#');
+	j = x;
+
+
+
+	while (i > 0 && j > 0 && floor[--i][--j] == '.');
+	if (y > 0 && x > 0)
+		count += (floor[i][j] == '#');
+	i = y; j = x;
+
+
+
+	while (i < floor.size() - 1 && j < floor[y].size() - 1 && floor[++i][++j] == '.');
+
+	if (y < floor.size() - 1 && x < floor[y].size() - 1)
+		count += (floor[i][j] == '#');
+
+	i = y; j = x;
+
+
+	// anti diagonal directions
+	while (i < floor.size() - 1 && j > 0 && floor[++i][--j] == '.');
+
+	if (y < floor.size() - 1 && x > 0)
+		count += (floor[i][j] == '#');
+
+	i = y; j = x;
+
+
+	while (i > 0 && j < floor[y].size() - 1 && floor[--i][++j] == '.');
+
+	if (y > 0 && x < floor[y].size() - 1)
+		count += (floor[i][j] == '#');
+
+	i = y; j = x;
+
+
+
+	return count;
+}
 
 
 std::vector<std::string> NextData(std::vector<std::string>& current, const int limit , const bool OneORTwo)
