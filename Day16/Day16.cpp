@@ -81,7 +81,7 @@ void GetInput(std::string  filename)
 			GoodTickets.push_back(move(ticket));
 		
 	}
-
+	file.close();
 	std::cout << "The error in tickets data are "<< error << std::endl;
 }
 
